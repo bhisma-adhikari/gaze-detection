@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<input type="file" accept="image/jpeg, image/png" id="upload-file" onchange="onsubmission()"/>
+
+
+<script>
+
+    function onsubmission() {
+        // This is the file user has chosen
+        var myfile = document.getElementById('upload-file').files[0];
+        var data = new FormData();
+        data.append('face_image', myfile);
+
+        axios.post('http://62.151.183.166/api/gaze-detection/classify-image', data).then(function (response) {
+            console.log(response.data)
+            alert('left :' + response.data.left_eye + '\nright : ' + response.data.right_eye);
+        }).catch(function (error) {
+            console.log(error)
+            alert('Error :',response.data.ERROR);
+        })
+    }
+
+
+</script>
+
+</body>
+</html>
